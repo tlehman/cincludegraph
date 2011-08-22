@@ -1,0 +1,24 @@
+Author: Tobi Lehman
+ Email: tobi.lehman@gmail.com
+
+This program is free software, and the output to image part depends on Graphviz: 
+    http://www.graphviz.org
+
+Description: C Include Graph is a program that takes a path to a directory of C/C++ 
+source files and outputs a digraph where the nodes are source files, and 
+the edges are "includes" relations.
+
+Example: 
+    $ incgrph.py <path>
+    digraph <path> 
+    {
+        foo.cpp -> bar.h
+        ...
+        baz.cpp -> goa.h -> phi.h
+    }
+
+Optional: you can feed the -i flag to incgrph.py to output a png file of the digraph.
+
+Note: 
+To check whether you have it [graphviz] installed, open a terminal and type 
+"dot", if you get something other than "command not found" then it is installed.
