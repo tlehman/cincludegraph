@@ -1,10 +1,17 @@
 Author: Tobi Lehman
  Email: tobi.lehman@gmail.com
 
-This program is free software, and the output to image part depends on Graphviz: 
-    http://www.graphviz.org
+This program is free software (LICENSE?)
 
-Description: C Include Graph is a program that takes a path to a directory of C/C++ 
+Dependencies:
+    argparse (included):
+        http://code.google.com/p/argparse/  
+    graphviz:
+        http://www.graphviz.org
+
+Description: 
+Generate a digraph that visually represents C/C++ source file dependencies.
+C Include Graph is a program that takes a path to a directory of C/C++ 
 source files and outputs a digraph where the nodes are source files, and 
 the edges are "includes" relations.
 

@@ -59,8 +59,9 @@ digraph_name = digraph_name.replace(".","_").replace(" ","_")
 # output the digraph in DOT format
 #   for more information on DOT, see: http://www.graphviz.org/doc/info/lang.html 
 #   and for a less formal intro, see: http://en.wikipedia.org/wiki/DOT_language
-print("digraph %s {" % digraph_name)
+print("digraph %s {" % digraph_name)        # NOTE for later: make the digraph_name based on directory name
 for edge in edges:
     print(" "*4 + edge)
 print("}")
+
 
