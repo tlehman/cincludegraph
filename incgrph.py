@@ -6,6 +6,21 @@ import os
 import argparse
 # define some constants
 
+#################################################################################
+#  utility function(s)
+#################################################################################
+def listdir_nohidden(path):
+    """ list contents of directory that are not hidden, 
+        borrowed from Stack Overflow user Adam Rosenfield, question 7099290 """
+    from os import listdir
+    for f in listdir(path):
+        if not f.startswith('.'):
+            yield f
+
+#################################################################################
+#  define command line options and parse input
+#################################################################################
+
 parser = argparse.ArgumentParser(prog='incgrph.py', add_help=False)
 
 # the path argument will supply the place the program should start
@@ -18,11 +33,14 @@ parser.add_argument('-i', dest='imgout', action='store_const',
 # parse the command-line arguments
 args = parser.parse_args()
 
-# get contents of csrcpath directory
 # get filenames from csrcpath
 filenames = filter(lambda f: os.path.isfile(os.path.join(args.csrcpath, f)), 
-                   os.listdir(args.csrcpath))    # NOTE for later: filter out based on list of acceptable 
-                                                 # extensions like c, cpp, cxx, cu ... etc.
+                   listdir_nohidden(args.csrcpath))    # NOTE for later: filter out based on list of acceptable 
+                                                       # extensions like c, cpp, cxx, cu ... etc.
+
+#################################################################################
+#  generate the graph
+#################################################################################
 
 # the directed edges of the output graph
 edges=set()
@@ -52,16 +70,30 @@ for filename in filenames:
             edges.add(s)
 
 # get the directory name
-digraph_name = args.csrcpath.split("/").pop()  
-# remove all of the unsavory characters (e.g. ".", " ", ...)
-digraph_name = digraph_name.replace(".","_").replace(" ","_")
+if args.csrcpath[-1] == '/': srcpath = args.csrcpath[0:-1]   # remove the trailing slash
+else:                        srcpath = args.csrcpath
 
-# output the digraph in DOT format
+digraph_name = srcpath.split('/')[-1]
+
+# remove all of the unsavory characters (e.g. ".", " ", ...)
+digraph_name = digraph_name.replace(".","_")
+digraph_name = digraph_name.replace(" ","_")
+
+#################################################################################
+#  output the digraph 
+#
+#  by default, the program outputs the graph in DOT format
 #   for more information on DOT, see: http://www.graphviz.org/doc/info/lang.html 
 #   and for a less formal intro, see: http://en.wikipedia.org/wiki/DOT_language
-print("digraph %s {" % digraph_name)        # NOTE for later: make the digraph_name based on directory name
+#################################################################################
+
+dotgraph = "digraph %s {" % digraph_name + "\n"
 for edge in edges:
-    print(" "*4 + edge)
-print("}")
+    dotgraph += " "*4 + edge + "\n"
+dotgraph += "}"
 
-
+if args.imgout == 1: 
+    #print("created %s.png" % digraph_name)
+    print("run the program about without -i and forward the ouput to a .dot file, then use the dot executable to convert it to a png, this will be added later, but currently I have not finished it.")
+else:
+    print(dotgraph)
