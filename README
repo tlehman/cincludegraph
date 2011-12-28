@@ -26,6 +26,10 @@ Example:
 
 Optional: you can feed the -i flag to incgrph.py to output a png file of the digraph.
 
+Goals:
+ Simplify usage of program.
+ Generalize to other programming languages.
+
 Note: 
 To check whether you have it [graphviz] installed, open a terminal and type 
 "dot", if you get something other than "command not found" then it is installed.
